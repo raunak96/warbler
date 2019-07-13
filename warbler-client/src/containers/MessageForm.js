@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { postNewMessage } from "../store/actions/messages";
+import {removeError} from "../store/actions/errors";
 
 class MessageForm extends Component {
   constructor(props) {
@@ -18,6 +19,9 @@ class MessageForm extends Component {
   };
 
   render() {
+    this.props.history.listen(()=>{
+        removeError();     //IF ROUTES ARE CHANGES SAY FROM SIGNUP TO SIGNIN PREVIOUS ERROR NO LONGER HOLDS
+    });
     return (
       <form onSubmit={this.handleNewMessage}>
         {this.props.errors.message && (
@@ -43,4 +47,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { postNewMessage })(MessageForm);
+export default connect(mapStateToProps, { postNewMessage,removeError })(MessageForm);

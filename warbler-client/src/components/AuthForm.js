@@ -25,6 +25,7 @@ class AuthForm extends Component {
       .catch(()=>{
         return;
       });
+      this.setState({password:""});
   }
   
   render() {

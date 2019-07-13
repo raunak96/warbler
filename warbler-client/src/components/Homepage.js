@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import MessageTimeline from "./MessageTimeline";
-const Homepage = ({currentUser}) => {
+const Homepage = ({currentUser,errors,history,removeError}) => {
+  history.listen(()=>{
+        removeError();     //IF ROUTES ARE CHANGES SAY FROM SIGNUP TO SIGNIN PREVIOUS ERROR NO LONGER HOLDS
+    });
   if(!currentUser.isAuthenticated){
       return (
       <div className="home-hero">
@@ -14,8 +17,13 @@ const Homepage = ({currentUser}) => {
     );
   }
   return(
-    <MessageTimeline profileImageUrl={currentUser.user.profileImageUrl} username={currentUser.user.username}/>  
-  )
+    <div>
+    {errors && (
+          <div className="alert alert-danger">{errors}</div>
+        )}
+    <MessageTimeline profileImageUrl={currentUser.user.profileImageUrl} username={currentUser.user.username}/>
+    </div>
+  );
 };
 
 export default Homepage;

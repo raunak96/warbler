@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateMessage } from "../store/actions/messages";
-
+import {removeError} from "../store/actions/errors";
 class UpForm extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +9,7 @@ class UpForm extends Component {
       message:this.props.location.text
     };
   }
-
+  
   handleNewMessage = event => {
     event.preventDefault();
     this.props.updateMessage(this.state.message,this.props.match.params.id,this.props.match.params.message_id);
@@ -18,6 +18,9 @@ class UpForm extends Component {
   };
 
   render() {
+    this.props.history.listen(()=>{
+        removeError();     //IF ROUTES ARE CHANGES SAY FROM SIGNUP TO SIGNIN PREVIOUS ERROR NO LONGER HOLDS
+    });
     return (
       <form onSubmit={this.handleNewMessage}>
         {this.props.errors.message && (
@@ -43,4 +46,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { updateMessage })(UpForm);
+export default connect(mapStateToProps, { updateMessage,removeError })(UpForm);

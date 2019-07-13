@@ -15,7 +15,7 @@ const Main = props => {
   return (
     <div className="container">
       <Switch>
-        <Route exact path="/" render={props => <Homepage currentUser={currentUser} {...props} />} />  {/*HOMEPAGE NOW HAS HISTORY,MATCH ETC DUE TO ...props from router */}
+        <Route exact path="/" render={props => <Homepage currentUser={currentUser} removeError={removeError} errors={errors.message} {...props} />} />  {/*HOMEPAGE NOW HAS HISTORY,MATCH ETC DUE TO ...props from router */}
         <Route exact path="/signin" render={props => {
             return ( 
             <AuthForm errors={errors} removeError={removeError} onAuth={authUser} buttonText="Log in" heading="Welcome Back." {...props}/>
